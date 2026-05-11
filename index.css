@@ -1,0 +1,76 @@
+import { motion } from "motion/react";
+import { ShieldAlert, CheckCircle2, ArrowLeft } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { CartItem } from "../types";
+
+interface CheckoutViewProps {
+  items: CartItem[];
+  onFinish: () => void;
+  onAbort: () => void;
+}
+
+export default function CheckoutView({ items, onFinish, onAbort }: CheckoutViewProps) {
+  const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+  return (
+    <motion.div 
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
+      className="min-h-[80vh] flex flex-col items-center justify-center py-20 px-4"
+    >
+      <div className="w-full max-w-2xl bg-black border-2 border-neon-cyan/50 p-8 rounded-[15px] shadow-[0_0_60px_rgba(0,243,255,0.15)] relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-neon-cyan to-transparent animate-pulse" />
+        
+        {/* GRID OVERLAY FOR HUD FEEL */}
+        <div className="absolute inset-0 z-0 opacity-10 pointer-events-none" 
+             style={{ backgroundImage: 'linear-gradient(rgba(0,243,255,0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(0,243,255,0.2) 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
+
+        <div className="text-center mb-12 relative z-10">
+          <h2 className="text-4xl md:text-6xl font-black italic tracking-tighter mb-2 font-display neon-text-cyan uppercase">FINALIZANDO <span className="text-white">MISSÃO</span></h2>
+          <p className="tech-label text-neon-cyan/60 bg-neon-cyan/5 inline-block px-4 py-1 border-x border-neon-cyan">REVÍSÃO_DE_PARÂMETROS_REQUERIDA</p>
+        </div>
+
+        <div className="space-y-4 mb-10 relative z-10">
+          {items.map((item, index) => (
+            <div key={`${item.id}-${index}`} className="flex justify-between items-center border-b-2 border-white/5 pb-2 font-mono text-sm tracking-tighter">
+              <span className="text-white/60 uppercase">[{item.name}] x{item.quantity}</span>
+              <span className="text-neon-cyan font-bold italic">R$ {(item.price * item.quantity).toFixed(2)}</span>
+            </div>
+          ))}
+          <div className="flex justify-between items-center pt-6">
+            <span className="text-2xl font-black italic font-display text-white italic underline decoration-neon-cyan decoration-4 underline-offset-8 uppercase">SOMA_DATA</span>
+            <span className="text-4xl font-black text-terminal-green font-display neon-text-green italic">R$ {total.toFixed(2)}</span>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
+          <button 
+            onClick={onFinish}
+            className="h-16 btn-neon-green text-xl font-mono italic tracking-[0.1em] rounded-none uppercase group"
+          >
+            <span className="flex items-center gap-2 group-hover:scale-110 transition-transform justify-center">
+              <CheckCircle2 size={24} />
+              EXECUTAR_PEDIDO
+            </span>
+          </button>
+          <button 
+            onClick={onAbort}
+            className="h-16 btn-neon-red text-lg font-mono tracking-widest rounded-none uppercase group"
+          >
+            <span className="flex items-center gap-2 group-hover:scale-105 transition-transform justify-center">
+              <ShieldAlert size={20} />
+              ABORTAR_MISSÃO
+            </span>
+          </button>
+        </div>
+
+        <div className="mt-10 text-center relative z-10 border-t border-white/5 pt-6">
+           <Button variant="ghost" onClick={onAbort} className="text-neon-cyan/40 text-[11px] font-mono hover:text-neon-cyan uppercase tracking-[0.3em] font-bold">
+             <ArrowLeft size={14} className="mr-2" />
+             VOLTAR_PARA_MATRIZ_SELEÇÃO
+           </Button>
+        </div>
+      </div>
+    </motion.div>
+  );
+}

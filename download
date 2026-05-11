@@ -1,0 +1,147 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Orbitron:wght@400;700;900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@theme {
+  --font-sans: "Space Mono", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Orbitron", sans-serif;
+  --font-mono: "Space Mono", monospace;
+  
+  --color-neon-cyan: #00f3ff;
+  --color-neon-pink: #ff00ff;
+  --color-neon-purple: #bc13fe;
+  --color-neon-amber: #ffb800;
+  --color-neon-red: #ff003c;
+  --color-terminal-green: #39FF14;
+  --color-cyber-black: #050505;
+  --color-cyber-gray: #0A0A0A;
+  --color-cyber-border: #1A1A1A;
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 2%;
+    --foreground: 0 0% 100%;
+    --card: 0 0% 6%;
+    --card-foreground: 0 0% 100%;
+    --popover: 0 0% 6%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 184 100% 50%;
+    --primary-foreground: 0 0% 0%;
+    --secondary: 300 100% 50%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 0 0% 10%;
+    --muted-foreground: 0 0% 60%;
+    --accent: 0 0% 10%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 345 100% 50%;
+    --border: 184 100% 50% / 0.2;
+    --input: 184 100% 50% / 0.2;
+    --ring: 184 100% 50%;
+    --radius: 0rem;
+  }
+
+  html, body {
+    background-color: #050505 !important;
+    color: #ffffff !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow-x: hidden;
+  }
+
+  body {
+    @apply font-mono antialiased;
+    background-image: 
+      radial-gradient(circle at 50% -20%, rgba(0, 243, 255, 0.15), transparent 40%),
+      linear-gradient(rgba(0, 243, 255, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 243, 255, 0.05) 1px, transparent 1px) !important;
+    background-size: 100% 100%, 30px 30px, 30px 30px !important;
+    background-attachment: fixed !important;
+  }
+
+  body::before {
+    content: " ";
+    display: block;
+    position: fixed;
+    top: 0; left: 0; bottom: 0; right: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+                linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+    z-index: 9999;
+    background-size: 100% 4px, 3px 100%;
+    pointer-events: none;
+    opacity: 0.4;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display tracking-tighter uppercase italic leading-none;
+  }
+  
+  * {
+    @apply border-white/5;
+  }
+}
+
+@layer components {
+  .neon-border-cyan {
+    @apply border-2 border-neon-cyan shadow-[0_0_15px_rgba(0,243,255,0.4)];
+  }
+  
+  .neon-text-cyan {
+    text-shadow: 0 0 10px rgba(0, 243, 255, 0.8), 0 0 20px rgba(0, 243, 255, 0.4);
+  }
+
+  .neon-text-pink {
+    text-shadow: 0 0 10px rgba(255, 0, 255, 0.8), 0 0 20px rgba(255, 0, 255, 0.4);
+  }
+
+  .neon-text-green {
+    text-shadow: 0 0 10px rgba(57, 255, 20, 1);
+  }
+
+  .glass-hud {
+    @apply bg-black/90 backdrop-blur-xl border-2 border-neon-pink shadow-[-10px_0_30px_rgba(255,0,255,0.2)];
+  }
+  
+  .tech-label {
+    @apply font-mono text-[9px] uppercase tracking-[0.2em] text-neon-cyan/60;
+  }
+
+  .arcade-card {
+    @apply bg-[rgba(15,15,15,0.95)] border-2 border-neon-cyan rounded-[15px] overflow-hidden transition-all duration-300;
+    box-shadow: 0 0 15px rgba(0, 243, 255, 0.4);
+  }
+
+  .arcade-card:hover {
+    @apply border-white;
+    box-shadow: 0 0 30px rgba(0, 243, 255, 0.8);
+    transform: translateY(-5px);
+  }
+
+  .btn-neon-cyan {
+    @apply bg-neon-cyan text-black font-black uppercase tracking-widest px-6 py-2 shadow-[0_0_15px_rgba(0,243,255,0.6)] hover:bg-white hover:shadow-[0_0_25px_rgba(255,255,255,0.7)] transition-all;
+  }
+
+  .btn-neon-green {
+    @apply bg-terminal-green text-black font-black uppercase tracking-widest px-6 py-2 shadow-[0_0_20px_rgba(57,255,20,0.6)] hover:bg-white hover:shadow-[0_0_40px_rgba(57,255,20,1)] transition-all;
+    animation: btn-pulse-anim 2s infinite;
+  }
+
+  .btn-neon-red {
+    @apply border-2 border-neon-red text-neon-red font-black uppercase tracking-widest px-6 py-2 shadow-[0_0_15px_rgba(255,0,60,0.5)] hover:bg-neon-red hover:text-white hover:shadow-[0_0_30px_rgba(255,0,60,0.8)] transition-all;
+  }
+
+  .hud-magenta {
+    @apply border-2 border-neon-pink shadow-[-10px_0_40px_rgba(255,0,255,0.4)];
+  }
+
+  .btn-pulse {
+    animation: btn-pulse-anim 2s infinite;
+  }
+
+  @keyframes btn-pulse-anim {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(57, 255, 20, 0.7); }
+    70% { transform: scale(1.02); box-shadow: 0 0 0 10px rgba(57, 255, 20, 0); }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(57, 255, 20, 0); }
+  }
+}
